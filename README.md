@@ -1,56 +1,50 @@
-# Mob_HSAP
+# ATrDW
 
-The Hybrid Search/Analytical Processing for Multiple Aspect Trajectory (Mob_HSAP) is a hybrid approach to searching and analyzing semantic trajectories
+Analytical Processing for Multiple Aspect Trajectory
 
 
 # Scripts
 
-The database scripts are in MOBHSAP\scripts
+The database scripts are in atrdw\scripts
 
 * Tripbuilder dataset
 ```sh
-MOBHSAP/scripts/scriptsTripbuilder.zip
+atrdw/scripts/scriptsTripbuilder.zip
 ```
 
 * Foursquare dataset (sample)
 ```sh
-MOBHSAP/scripts/sampl_input_foursquare.zip
+atrdw/scripts/sampl_input_foursquare.zip
 ```
 
 * DDL Datawarehouse
 ```sh
-MOBHSAP/scripts/DW/DW.sql
+atrdw/scripts/DW/DW.sql
 ```
 
 * Regexlookbehind function
 ```sh
-MOBHSAP/scripts/DW/regexlookbehind_function.sql
+atrdw/scripts/DW/regexlookbehind_function.sql
 ```
 
 ## How load dataset
 Config the input.properties file. Example:
 ```sh
-input_class=mobhsap.foursquare.FoursquareInput
-aspectDao_class=mobhsap.foursquare.FoursquareAspectDAO
+input_class=atrdw.foursquare.FoursquareInput
+aspectDao_class=atrdw.foursquare.FoursquareAspectDAO
 separator=;
 ```
 * Run the Main_Input class
 ```sh
-mvn compile exec:java -Dexec.mainClass="mobhsap.Main_Input"
-```
-
-# Run tripBuilder and foursqaure search test
-Queries for Tripbuilder text database
-```sh
-mvn compile exec:java -Dexec.mainClass="mobhsap.tripbuilder.search.test.QueriesTripBuilderMain"
-```
-Queries for Foursquare text database 
-```sh
-mobhsap.foursquare.search.test.QueriesFoursquareMain
-mobhsap.foursquare.search.test.NewQueriesFoursquareMain
+mvn compile exec:java -Dexec.mainClass="atrdw.Main_Input"
 ```
 
 # Run Foursquare analytic query test
 ```sh
-mvn compile exec:java -Dexec.mainClass="mobhsap.foursquare.analytics.test.QueryATrDWMainTest"
+mvn compile exec:java -Dexec.mainClass="atrdw.foursquare.analytics.test.QueryATrDWMainTest"
+```
+
+# Run Tripbuilder analytic query test
+```sh
+mvn compile exec:java -Dexec.mainClass="atrdw.tripbuilder.analytics.test.QueryATrDWMainTest"
 ```
