@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import atrdw.model.Message;
-import atrdw.util.ComponentStatistics;
 
 public class MessageDAO {
 
@@ -51,8 +50,8 @@ public class MessageDAO {
 		psCalcDistance = conn.prepareStatement("select " + stDist);
 
 		String columns = "id_poi, id_user, id_aspect, id_time, num_trajectory, distance, total_distance, duration, "
-				   + "total_duration, historic_poi, historic_category, position";
-		String values = "?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
+				   + "total_duration, position";
+		String values = "?, ?, ?, ?, ?, ?, ?, ?, ?, ?";
 		String sql = "INSERT INTO fato (" + columns + ") VALUES(" + values + ") ";
 	
 		psFato = conn.prepareStatement(sql);
@@ -163,10 +162,7 @@ public class MessageDAO {
 	 * @throws SQLException
 	 */
 	public void insertFato(Message m) throws Exception {
-		//for(String poi : m.getPois()) { //TODO For while, there is only one PoI per category
-		
-		    Long t1 = System.currentTimeMillis();
-		
+
 			Integer idUser = insertUserDimension(m);
 			Integer idTime = insertTimeDimension(m);
 			Integer idPoi = insertPoiDimension(m);
@@ -180,18 +176,7 @@ public class MessageDAO {
 
 			calcMedidas(m);
 
-			Long t2 = System.currentTimeMillis();
-			t2 = System.currentTimeMillis();
-			ComponentStatistics.getInstance().setEtlTime(t2-t1); //statics etl
-
-
-			t1 = System.currentTimeMillis();
-
 			psFato.execute();
-
-			t2 = System.currentTimeMillis();
-			ComponentStatistics.getInstance().setDwManagerTime(t2-t1); //statics Dw manager
-		//}
 	}
 
 	private void calcMedidas(Message m) throws SQLException {
@@ -225,9 +210,9 @@ public class MessageDAO {
 		psFato.setDouble(7, status.totalDistance);
 		psFato.setDouble(8, status.duration);
 		psFato.setDouble(9, status.totalDuration);
-		psFato.setString(10, status.historicPois);
-		psFato.setString(11, status.historicCat);
-		psFato.setInt(12, status.position);
+		//psFato.setString(10, status.historicPois);
+		//psFato.setString(11, status.historicCat);
+		psFato.setInt(10, status.position);
 	}
 }
 
@@ -236,8 +221,8 @@ class StatusTrajectory {
 	double totalDistance = 0;
 	double duration = 0;
 	double totalDuration = 0;
-	String historicPois;
-	String historicCat;
+	//String historicPois;
+	//String historicCat;
 	int position = 1;
 	String numTrajectory;
 
@@ -252,15 +237,15 @@ class StatusTrajectory {
 		totalDistance = 0;
 		duration = 0;
 		totalDuration = 0;
-		historicPois = m.getOnePoi();
-		historicCat = m.getOneCategory();
+		//historicPois = m.getOnePoi();
+		//historicCat = m.getOneCategory();
 		position = 1;
 		numTrajectory = m.getTrajectoryNumber();
 	}
 
 	public void newLastPoi(Message m, PreparedStatement ps) throws SQLException {
-		historicPois += "~" + m.getOnePoi();
-		historicCat += "," + m.getOneCategory();
+		//historicPois += "~" + m.getOnePoi();
+		//historicCat += "," + m.getOneCategory();
 		distance = calcDistance(m, ps);
 		totalDistance += distance;
 		duration = calcDuration(m);

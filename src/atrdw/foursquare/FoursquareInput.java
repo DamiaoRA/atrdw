@@ -20,17 +20,17 @@ public class FoursquareInput implements InputMessageIF{
 	private HikariDataSource ds;
 	private Connection conn;
 	private ResultSet rs;
+	private String tableName = "tb_input_foursquare";//data_checkin_geom
 
 	public FoursquareInput() throws SQLException {
 		config = new HikariConfig("/foursquareInput.properties");
 		ds = new HikariDataSource(config);
-//		ds.setSchema(config.getSchema());
 
 		String sql = 
 				"SELECT anonymized_user_id, tid, lat, lon, "
 						+ "date_time, day, poi_name, poi_category, "
 						+ "price, rating, weather, city, state, country "
-						+ "FROM data_checkin_geom "
+						+ "FROM " +  tableName + " "
 						+ "ORDER BY anonymized_user_id, tid, date_time";
 
 		conn = ds.getConnection();
