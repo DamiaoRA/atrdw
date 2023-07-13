@@ -1,6 +1,6 @@
 # ATrDW
 
-Analytical Processing for Multiple Aspect Trajectory
+This project is a back-end framework for semantic trajectory. The framework is an Analytical Processing for Multiple Aspect Trajectory, which handles raw data and the aspects of trajectories and loads trajectory data from a dataset into a single Aspect Trajectory Data Warehouse (ATrDW) schema.
 
 
 # Scripts
