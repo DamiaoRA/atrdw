@@ -6,7 +6,7 @@ This project is a back-end framework for semantic trajectory. The framework is a
 
 # Run analytic query test
 ```sh
-mvn compile exec:java -Dexec.mainClass="mobhsap.foursquare.analytics.test.QueryATrDWMainTest"
+mvn compile exec:java -Dexec.mainClass="atrdw.foursquare.analytics.test.QueryATrDWMainTest"
 ```
 
 
