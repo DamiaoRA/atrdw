@@ -35,9 +35,8 @@ CREATE DATABASE trajectory_input;
 ```sh
 mvn compile exec:java -Dexec.mainClass="atrdw.Main_Input"
 ```
-
-Finally, the ATrDW is read to run analytc queries. Some examples of analytic queries can be find in the class `QueryATrDWMainTest.java`.
-Here is a example how execute this class:
+Finally, the ATrDW is read to run analytic queries. Some examples can be found in the class `QueryATrDWMainTest.java`.
+Here is an example how to execute this class:
 
 ```sh
 mvn compile exec:java -Dexec.mainClass="atrdw.foursquare.analytics.test.QueryATrDWMainTest"
