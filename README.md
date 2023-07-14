@@ -20,17 +20,30 @@ CREATE DATABASE trajectory_input;
  ```sh
   psql - U postgres -W -h localhost -f ~\atrdw\scripts\tb_input.sql -d trajectory_input
   ```
-* Create a database warehouse. For example:
+
+* Create a database warehouse containing Postgis spatial functions. For example:
   ```sh
   CREATE DATABASE atrdw TEMPLATE template_postgis;;
   ```
+  
+* Run the script `DW.sql` for create the ATrDW. Example:
+ ```sh
+  psql - U postgres -W -h localhost -f ~\atrdw\scripts\DW.sql -d atrdw
+  ```
 
+* Run the command below to start the ETL process and feed the ATrDW.
+```sh
+mvn compile exec:java -Dexec.mainClass="atrdw.Main_Input"
+```
 
+Finally, the ATrDW is read to run analytc queries. Some examples of analytic queries can be find in the class `QueryATrDWMainTest.java`.
+Here is a example how execute this class:
 
-# Run analytic query test
 ```sh
 mvn compile exec:java -Dexec.mainClass="atrdw.foursquare.analytics.test.QueryATrDWMainTest"
 ```
+
+# Run analytic query test
 
 
 # Scripts
