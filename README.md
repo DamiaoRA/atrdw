@@ -22,71 +22,40 @@ CREATE DATABASE trajectory_input;
   ```
 
 * Create a database warehouse containing Postgis spatial functions. For example:
-  ```sh
-  CREATE DATABASE atrdw TEMPLATE template_postgis;;
-  ```
+ ```sh
+ CREATE DATABASE atrdw TEMPLATE template_postgis;
+ ```
   
 * Run the script `DW.sql` for create the ATrDW. Example:
  ```sh
-  psql - U postgres -W -h localhost -f ~\atrdw\scripts\DW.sql -d atrdw
-  ```
+ psql - U postgres -W -h localhost -f ~\atrdw\scripts\DW.sql -d atrdw
+ ```
 
 * Run the command below to start the ETL process and feed the ATrDW.
 ```sh
 mvn compile exec:java -Dexec.mainClass="atrdw.Main_Input"
 ```
 Finally, the ATrDW is read to run analytic queries. Some examples can be found in the class `QueryATrDWMainTest.java`.
-Here is an example how to execute this class:
+Here is an example of how to execute this class:
 
+## Run analytic query test
 ```sh
 mvn compile exec:java -Dexec.mainClass="atrdw.foursquare.analytics.test.QueryATrDWMainTest"
 ```
 
-# Run analytic query test
+# Development
+## How load another trajectory data
+If you want to expand the framework to load another trajectory data, you will need to follow the steps:
 
-
-# Scripts
-
-The database scripts are in atrdw\scripts
-
-* Tripbuilder dataset
-```sh
-atrdw/scripts/scriptsTripbuilder.zip
-```
-
-* Foursquare dataset (sample)
-```sh
-atrdw/scripts/sampl_input_foursquare.zip
-```
-
-* DDL Datawarehouse
-```sh
-atrdw/scripts/DW/DW.sql
-```
-
-* Regexlookbehind function
-```sh
-atrdw/scripts/DW/regexlookbehind_function.sql
-```
-
-## How load dataset
-Config the input.properties file. Example:
-```sh
-input_class=atrdw.foursquare.FoursquareInput
-aspectDao_class=atrdw.foursquare.FoursquareAspectDAO
-separator=;
-```
-* Run the Main_Input class
-```sh
-mvn compile exec:java -Dexec.mainClass="atrdw.Main_Input"
-```
-
-# Run Foursquare analytic query test
-```sh
-mvn compile exec:java -Dexec.mainClass="atrdw.foursquare.analytics.test.QueryATrDWMainTest"
-```
-
-# Run Tripbuilder analytic query test
-```sh
-mvn compile exec:java -Dexec.mainClass="atrdw.tripbuilder.analytics.test.QueryATrDWMainTest"
-```
+1. to implement the `InputMessageIF.java` interface;
+2. to implement the `AspectDAOIF.java` interface for informs how the aspects will be saved in the ATrDW;
+3. config the `~\atrdw\resources\input.properties` file, informing the:
+   - input class name created at step one;
+   - the class name that implements the `AspectDAOIF.java`;
+   - The character that will be used to separate the aspects in the ATrDW.
+     - Example:
+        ```sh
+        input_class=atrdw.foursquare.FoursquareInput
+        aspectDao_class=atrdw.foursquare.FoursquareAspectDAO
+        separator=;
+       ```
